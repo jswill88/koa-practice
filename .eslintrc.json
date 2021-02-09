@@ -3,14 +3,14 @@
     "Handlebars": true,
     "$": true
   },
-  "extends": "eslint:recommended",
+  "extends": "koa",
   "parserOptions": {
     "ecmaVersion": 6
   },
   "env": {
-    "browser": true,
-    "jquery": true,
-    "node": true,
+    "browser": false,
+    "jquery": false,
+    "node": false,
     "es6": true,
     "jest": true
   },

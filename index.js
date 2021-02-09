@@ -8,17 +8,20 @@ const bodyParser = require('koa-bodyparser');
 const app = new Koa();
 const router = new Router();
 
-
 /** add error middleware before routes */
 app.use(async (ctx, next) => {
   try {
-    await next()
-  } catch(e) {
+    await next();
+  } catch (e) {
     console.log(e.status);
     ctx.status = e.status || 500;
     ctx.body = e.message;
   }
 });
+
+/** Other middleware */
+app.use(bodyParser());
+app.use(Logger());
 
 router.get('home', '/', async ctx => {
   /** test what error looks like */
@@ -36,14 +39,13 @@ router.post('/paramtest/:word', async ctx => {
 
 router.post('/body', async (ctx) => {
   // const { request: req } = ctx;
-  const { request } =  ctx;
-  /** With the koa-bodyparser, the body is now in req.body */
-  console.log('request', request.body);
+  const { request } = ctx;
+
+  /** With the koa-bodyparser, the body is now in request.body */
+  ctx.status = 301;
   ctx.body = request.body;
 })
 
-app.use(bodyParser());
-app.use(Logger());
 
 /** boilerplate koa code */
 app.use(router.routes())
